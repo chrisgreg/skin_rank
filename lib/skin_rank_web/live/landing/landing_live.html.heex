@@ -11,9 +11,15 @@
       <div id="skins" class="flex flex-col gap-4 my-8">
         <div :for={character <- @characters} id={"character-#{character.id}"}>
           <h2 class="font-semibold text-2xl mb-4"><%= character.name %></h2>
-          <div id="skins-#{character.id}" class="grid grid-cols-3 gap-8">
+          <div
+            id={"skins-#{character.id}"}
+            id={"#{character.id}-skins"}
+            phx-hook="Animate"
+            class="grid grid-cols-3 gap-8"
+          >
             <div
               :for={skin <- character.skins}
+              id={"skin-#{skin.id}"}
               class="hover:scale-105 transition-all cursor-pointer"
               phx-click="vote"
               phx-value-skin-id={skin.id}

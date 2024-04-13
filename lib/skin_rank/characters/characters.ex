@@ -5,5 +5,9 @@ defmodule SkinRank.Characters do
   def all do
     Repo.all(Character)
     |> Repo.preload(skins: [votes: :skin])
+    |> Enum.map(fn character ->
+      skins = Enum.sort_by(character.skins, fn skin -> Enum.count(skin.votes) end, :desc)
+      Map.put(character, :skins, skins)
+    end)
   end
 end
