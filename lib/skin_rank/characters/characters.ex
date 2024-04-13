@@ -4,6 +4,6 @@ defmodule SkinRank.Characters do
 
   def all do
     Repo.all(Character)
-    |> Repo.preload(:skins)
+    |> Repo.preload(skins: [votes: :skin])
   end
 end

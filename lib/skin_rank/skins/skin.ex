@@ -8,6 +8,7 @@ defmodule SkinRank.Skins.Skin do
     field :event, :string
     field :cost, :string
     belongs_to :character, SkinRank.Characters.Character
+    has_many :votes, SkinRank.Skins.Vote
   end
 
   def create_changeset(skin, attrs) do

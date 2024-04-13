@@ -23,6 +23,9 @@
                 <h3 class="font-semibold text-lg"><%= skin.name %></h3>
                 <p class="text-sm"><%= skin.event %></p>
                 <p class="text-sm"><%= skin.cost %></p>
+                <p class="text-right text-sm font-semibold">
+                  <%= Enum.count(skin.votes) %> votes
+                </p>
               </div>
             </div>
           </div>

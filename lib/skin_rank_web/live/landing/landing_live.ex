@@ -12,6 +12,11 @@ defmodule SkinRankWeb.LandingLive do
 
   def handle_event("vote", %{"skin-id" => skin_id}, socket) do
     Skins.new_vote(skin_id)
+
+    socket =
+      socket
+      |> assign(:characters, Characters.all())
+
     {:noreply, socket}
   end
 end
