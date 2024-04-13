@@ -1,3 +1,23 @@
 <main>
-  Hello
+  <div class="grid grid-cols-1 md:grid-cols-4 ">
+    <div id="side-panel" class="col-span-1 order-1 md:order-2">Side panel here</div>
+    <div class="col-span-1 md:col-span-3 order-2 md:order-1">
+      <div id="header">
+        <.header>
+          Overwatch Skin Rank
+          <:subtitle>Vote for your favourite Overwatch skins</:subtitle>
+        </.header>
+      </div>
+      <div id="skins" class="flex flex-col gap-4 my-8">
+        <div :for={character <- @characters} id={"character-#{character.id}"}>
+          <h2 class="font-semibold text-2xl"><%= character.name %></h2>
+          <div id="skins-#{character.id}" class="grid grid-cols-3 gap-4">
+            <div :for={skin <- character.skins}>
+              <img src={skin.image_url} alt={skin.name} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
