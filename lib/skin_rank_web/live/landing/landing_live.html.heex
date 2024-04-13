@@ -1,7 +1,24 @@
 <main>
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-    <div id="side-panel" class="col-span-1 order-1 md:order-2">Side panel here</div>
-    <div class="col-span-1 md:col-span-3 order-2 md:order-1">
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-8 ">
+    <div id="side-panel" class="col-span-1 order-1 md:order-2">
+      <h2 class="font-semibold text-xl">Top Skins</h2>
+      <div class="flex flex-col gap-2 mt-4" id="top-skins" phx-hook="Animate">
+        <div
+          :for={{skin, character, count} <- @top_skins}
+          id={"top-skin-#{skin.id}"}
+          class="flex flex-row justify-between items-center"
+        >
+          <div class="flex flex-col">
+            <div class="font-medium text-zinc-400"><%= character.name %></div>
+            <div class=""><%= skin.name %></div>
+          </div>
+          <div>
+            <span class="text-xl font-semibold"><%= count %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-1 md:col-span-4 order-2 md:order-1">
       <div id="header">
         <.header>
           Overwatch Skin Rank

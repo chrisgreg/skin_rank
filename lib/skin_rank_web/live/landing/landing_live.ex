@@ -8,6 +8,7 @@ defmodule SkinRankWeb.LandingLive do
     socket =
       socket
       |> assign(:characters, Characters.all())
+      |> assign(:top_skins, Skins.top_10_skins())
 
     {:ok, socket}
   end
@@ -26,6 +27,7 @@ defmodule SkinRankWeb.LandingLive do
     socket =
       socket
       |> assign(:characters, Characters.all())
+      |> assign(:top_skins, Skins.top_10_skins())
 
     {:noreply, socket}
   end
