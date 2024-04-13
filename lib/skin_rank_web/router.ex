@@ -17,7 +17,7 @@ defmodule SkinRankWeb.Router do
   scope "/", SkinRankWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", LandingLive
   end
 
   # Other scopes may use custom stacks.
