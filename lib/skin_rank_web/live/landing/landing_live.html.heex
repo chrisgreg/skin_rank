@@ -12,7 +12,12 @@
         <div :for={character <- @characters} id={"character-#{character.id}"}>
           <h2 class="font-semibold text-2xl mb-4"><%= character.name %></h2>
           <div id="skins-#{character.id}" class="grid grid-cols-3 gap-8">
-            <div :for={skin <- character.skins}>
+            <div
+              :for={skin <- character.skins}
+              class="hover:scale-105 transition-all cursor-pointer"
+              phx-click="vote"
+              phx-value-skin-id={skin.id}
+            >
               <img src={skin.image_url} alt={skin.name} class="rounded-lg shadow-md" />
               <div class="mt-2">
                 <h3 class="font-semibold text-lg"><%= skin.name %></h3>
