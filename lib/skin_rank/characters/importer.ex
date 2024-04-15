@@ -22,6 +22,8 @@ defmodule SkinRank.Characters.Importer do
   end
 
   def populate_db() do
+    File.mkdir!("#{:code.priv_dir(:skin_rank)}/static/images/skins")
+
     read_json()
     |> Flow.from_enumerable()
     |> Flow.partition()

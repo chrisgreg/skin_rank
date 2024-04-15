@@ -12,6 +12,10 @@ kill_signal = 'SIGTERM'
 [deploy]
   release_command = '/app/bin/migrate'
 
+[mounts]
+  source="skinrank_skin_images"
+  destination="/app/lib/skin_rank/priv/static/images"
+
 [env]
   PHX_HOST = 'skin-rank.fly.dev'
   PORT = '8080'
