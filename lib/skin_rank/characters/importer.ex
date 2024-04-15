@@ -23,10 +23,11 @@ defmodule SkinRank.Characters.Importer do
 
   def populate_db() do
     read_json()
-    |> Enum.map(fn {name, skins} ->
+    |> Flow.from_enumerable()
+    |> Flow.partition()
+    |> Flow.map(fn {name, skins} ->
       skins = skins |> Map.get("skins")
 
-      # TODO: Parallelise
       params = %{
         name: name,
         skins:
@@ -38,7 +39,10 @@ defmodule SkinRank.Characters.Importer do
               {:ok, file_path} ->
                 %{
                   name: skin["description"],
-                  image_url: file_path |> Path.relative_to(:code.priv_dir(:skin_rank)),
+                  image_url:
+                    file_path
+                    |> Path.relative_to(:code.priv_dir(:skin_rank))
+                    |> String.replace_leading("static", ""),
                   event: skin["event"],
                   cost: skin["cost"]
                 }
@@ -55,8 +59,9 @@ defmodule SkinRank.Characters.Importer do
       }
 
       Character.create_changeset(%Character{}, params)
+      |> Repo.insert()
     end)
-    |> Enum.each(&Repo.insert!/1)
+    |> Enum.to_list()
   end
 
   # def remove_poor_path do
