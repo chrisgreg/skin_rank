@@ -26,3 +26,6 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 - [ ] Fingerprint users to prevent multiple votes
 - [ ] Real-time cursors
 - [ ] Real-time user count
+
+Streamed on: Twitch.tv/CodeStirring
+VoD available at: YouTube.com/@codestirring
