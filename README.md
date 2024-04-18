@@ -21,11 +21,10 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 - [x] Add autoanimate to votes
 - [x] PubSub message passing
 - [x] Add top skins to side panel and animate
-- [ ] Optimise data fetching
-- [ ] Deploy
+- [x] Deploy
+- [ ] Pagination / Optimise data fetching
 - [ ] Fingerprint users to prevent multiple votes
 - [ ] Real-time cursors
 - [ ] Real-time user count
 
-Streamed on: Twitch.tv/CodeStirring
-VoD available at: YouTube.com/@codestirring
+VoD available at: [on YouTube](https://www.youtube.com/watch?v=vTumXmFJAgY&list=PL84_VFOlsqvrRU20qUWoBsJVStgg3WQcX)
