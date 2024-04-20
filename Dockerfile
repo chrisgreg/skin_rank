@@ -20,8 +20,9 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
 FROM ${BUILDER_IMAGE} as builder
 
+# TODO: Fix imagemagick not actually being installed
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git nodejs npm \
+RUN apt-get update -y && apt-get install -y build-essential imagemagick libmagickwand-dev git nodejs npm \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 RUN npm install --global yarn
