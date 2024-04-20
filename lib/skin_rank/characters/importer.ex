@@ -1,4 +1,5 @@
 defmodule SkinRank.Characters.Importer do
+  import Mogrify
   alias SkinRank.Characters.Character
   alias SkinRank.Repo
 
@@ -9,11 +10,19 @@ defmodule SkinRank.Characters.Importer do
     |> Jason.decode!()
   end
 
-  defp download_image(url, name) do
+  defp download_and_convert_image(url, name) do
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        dir_to_save = "#{:code.priv_dir(:skin_rank)}/static/images/skins/#{name}"
-        File.write(dir_to_save, body)
+        png_file_path_to_save = "#{:code.priv_dir(:skin_rank)}/static/images/skins/#{name}.png"
+        File.write(png_file_path_to_save, body)
+
+        %Mogrify.Image{path: dir_to_save} =
+          Mogrify.open(png_file_path_to_save)
+          |> format("webp")
+          |> save(in_place: true)
+
+        File.rm(png_file_path_to_save)
+
         {:ok, dir_to_save}
 
       {:error, %HTTPoison.Error{reason: reason}} ->
@@ -22,7 +31,7 @@ defmodule SkinRank.Characters.Importer do
   end
 
   def populate_db() do
-    File.mkdir!("#{:code.priv_dir(:skin_rank)}/static/images/skins")
+    File.mkdir_p!("#{:code.priv_dir(:skin_rank)}/static/images/skins")
 
     read_json()
     |> Flow.from_enumerable()
@@ -33,9 +42,11 @@ defmodule SkinRank.Characters.Importer do
       params = %{
         name: name,
         skins:
-          Enum.map(skins, fn skin ->
+          Flow.from_enumerable(skins)
+          |> Flow.partition()
+          |> Flow.map(fn skin ->
             image_result =
-              download_image(skin["image"], "#{name}_#{skin["description"]}.png")
+              download_and_convert_image(skin["image"], "#{name}_#{skin["description"]}")
 
             case image_result do
               {:ok, file_path} ->
@@ -58,6 +69,7 @@ defmodule SkinRank.Characters.Importer do
                 }
             end
           end)
+          |> Enum.to_list()
       }
 
       Character.create_changeset(%Character{}, params)
@@ -65,23 +77,4 @@ defmodule SkinRank.Characters.Importer do
     end)
     |> Enum.to_list()
   end
-
-  # def remove_poor_path do
-  #   import Ecto.Query
-
-  #   query =
-  #     from(c in SkinRank.Skins.Skin,
-  #       update: [
-  #         set: [
-  #           image_url:
-  #             fragment(
-  #               "replace(?, '/Users/chris/projects/skin_rank/_build/dev/lib/skin_rank/priv/static', '')",
-  #               c.image_url
-  #             )
-  #         ]
-  #       ]
-  #     )
-
-  #   Repo.update_all(query, [])
-  # end
 end

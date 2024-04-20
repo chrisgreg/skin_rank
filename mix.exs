@@ -51,7 +51,8 @@ defmodule SkinRank.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:httpoison, "~> 1.8"},
-      {:flow, "~> 1.2.4"}
+      {:flow, "~> 1.2.4"},
+      {:mogrify, "~> 0.9.3"}
     ]
   end
 
